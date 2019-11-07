@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "test": "mocha 'test/**/*.test.js'",
-    "start": "PORT=8080 node src/index.js"
+    "start": "node src/index.js",
+    "start:local": "PORT=8080 node src/index.js"
   },
   "dependencies": {
     "@koopjs/output-ogcapi-features": "^0.1.2",
