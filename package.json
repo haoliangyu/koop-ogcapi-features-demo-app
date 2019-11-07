@@ -1,0 +1,28 @@
+{
+  "name": "koop-ogcapi-features-demo-app",
+  "version": "0.1.0",
+  "description": "A project template for Koop",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "mocha 'test/**/*.test.js'",
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "@koopjs/output-ogcapi-features": "^0.1.2",
+    "@koopjs/provider-ogcapi-features": "^0.2.0",
+    "config": "^3.2.4",
+    "koop": "^3.13.0",
+    "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {
+    "@koopjs/cli": "^0.5.0",
+    "chai": "^4.2.0",
+    "mocha": "^6.2.2"
+  },
+  "repository": "",
+  "private": true,
+  "keywords": [
+    "koop",
+    "app"
+  ]
+}

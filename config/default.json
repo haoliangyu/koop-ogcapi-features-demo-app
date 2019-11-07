@@ -1,0 +1,14 @@
+{
+  "port":8080,
+  "output-ogcapi-features": {
+    "baseURL": "http://localhost:8080",
+    "limit": 100
+  },
+  "provider-ogcapi-features": {
+    "hosts": {
+      "geomet": {
+        "url": "https://geo.weather.gc.ca/geomet-beta/features"
+      }
+    }
+  }
+}
