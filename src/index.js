@@ -1,4 +1,6 @@
 const Koop = require('koop')
+const cors = require("cors");
+const serverless = require("serverless-http");
 const routes = require('./routes')
 const plugins = require('./plugins')
 
@@ -13,5 +15,8 @@ plugins.forEach((plugin) => {
 // add additional routes
 routes.forEach((route) => koop.server[route.method.toLowerCase()](route.path, route.controller))
 
-// start the server
-koop.server.listen(process.env.PORT, () => koop.log.info(`Koop server listening at ${process.env.PORT}`))
+// enable CORS
+koop.server.use(cors());
+
+// wrap the Koop server with the serverless framework
+module.exports.handler = serverless(koop.server);

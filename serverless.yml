@@ -1,0 +1,75 @@
+service: koop-ogcapi-features-demo
+
+plugins:
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+
+functions:
+  get-hub-collection-items:
+    handler: src/index.handler
+    events:
+      - http:
+          path: /arcgis-hub/{host}/collections/{collectionId}/items/{featureId}
+          method: get
+          cors: true
+          request:
+            parameters:
+              querystrings:
+                idField: false
+              paths:
+                host: true
+                collectionId: true
+                featureId: false
+  get-ogcapi-features-server:
+    handler: src/index.handler
+    events:
+      - http:
+          path: /ogcapi-features/{host}/{id}/FeatureServer/
+          method: get
+          cors: true
+          request:
+            parameters:
+              querystrings:
+                f: false
+              paths:
+                host: true
+                id: true
+  get-ogcapi-features-layer:
+    handler: src/index.handler
+    events:
+      - http:
+          path: /ogcapi-features/{host}/{id}/FeatureServer/{layer}
+          method: get
+          cors: true
+          request:
+            parameters:
+              querystrings:
+                f: false
+              paths:
+                host: true
+                id: true
+                layer: false
+  get-ogcapi-features-data-query:
+    handler: src/index.handler
+    events:
+      - http:
+          path: /ogcapi-features/{host}/{id}/FeatureServer/{layer}/{method}
+          method: get
+          cors: true
+          request:
+            parameters:
+              querystrings:
+                where: false
+                geometry: false
+                geometryType: false
+                offset: false
+                limit: false
+                f: false
+              paths:
+                host: true
+                id: true
+                layer: false
+                method: false
