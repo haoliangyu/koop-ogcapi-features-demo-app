@@ -1,0 +1,70 @@
+
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <!--
+  ArcGIS API for JavaScript, https://js.arcgis.com
+  For more information about the layers-featurelayer sample, read the original sample description at developers.arcgis.com.
+  https://developers.arcgis.com/javascript/latest/sample-code/layers-featurelayer/index.html
+  -->
+  <title>Intro to FeatureLayer - 4.13</title>
+
+  <link rel="stylesheet" href="https://js.arcgis.com/4.13/esri/themes/light/main.css" />
+  <script src="https://js.arcgis.com/4.13/"></script>
+
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+
+  <script>
+    require([
+      "esri/Map",
+      "esri/views/MapView",
+      "esri/layers/FeatureLayer"
+    ], function (Map, MapView, FeatureLayer) {   
+
+      /********************
+       * Add feature layer
+       ********************/
+
+      // Carbon storage of trees in Warren Wilson College.
+      var featureLayer = new FeatureLayer({
+        url:
+          "http://localhost:8080/ogcapi-features/geomet/ahccd-stations/FeatureServer"
+      });
+
+      var map = new Map({
+          basemap: "gray",
+          layers: [featureLayer]
+        });
+
+       var view = new MapView({
+          container: "viewDiv",
+          map: map,
+
+          extent: {
+            "xmin": -114.1900634765625,
+            "ymin": 50.20183944702149,
+            "xmax": -74.522216796875,
+            "ymax": 55.57971954345703,
+            "spatialReference": 4326
+          }
+        });
+    });
+  </script>
+</head>
+
+<body>
+  <div id="viewDiv"></div>
+</body>
+
+</html>

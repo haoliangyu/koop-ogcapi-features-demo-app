@@ -8,6 +8,9 @@
     "hosts": {
       "geomet": {
         "url": "https://geo.weather.gc.ca/geomet-beta/features"
+      },
+      "topographie": {
+        "url": "https://www.ldproxy.nrw.de/topographie"
       }
     }
   }

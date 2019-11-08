@@ -9,8 +9,8 @@
     "start:local": "PORT=8080 node src/index.js"
   },
   "dependencies": {
-    "@koopjs/output-ogcapi-features": "^0.1.2",
-    "@koopjs/provider-ogcapi-features": "^0.2.0",
+    "@koopjs/output-ogcapi-features": "^0.1.3",
+    "@koopjs/provider-ogcapi-features": "^0.2.2",
     "config": "^3.2.4",
     "koop": "^3.13.0",
     "node-fetch": "^2.6.0"
