@@ -8,6 +8,29 @@ provider:
   runtime: nodejs10.x
 
 functions:
+  get-hub-collections:
+    handler: src/index.handler
+    events:
+      - http:
+          path: /arcgis-hub/{host}/collections
+          method: get
+          cors: true
+          request:
+            parameters:
+              paths:
+                host: true
+  get-hub-collection:
+    handler: src/index.handler
+    events:
+      - http:
+          path: /arcgis-hub/{host}/collections/{collectionId}
+          method: get
+          cors: true
+          request:
+            parameters:
+              paths:
+                host: true
+                collectionId: true
   get-hub-collection-items:
     handler: src/index.handler
     events:
