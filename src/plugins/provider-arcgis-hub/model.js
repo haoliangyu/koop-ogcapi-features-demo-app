@@ -1,6 +1,4 @@
 const fetch = require('node-fetch')
-const itemRegex = new RegExp(/^([a-z]|[0-9]){32}$/i);
-const datasetRegex = new RegExp(/^([a-z]|[0-9]){32}_[0-9]+$/i);
 
 function Model (koop) {}
 
@@ -18,48 +16,54 @@ function Model (koop) {}
 Model.prototype.getData = async function (req, callback) {
   const {
     params: {
-      host
+      host,
+      id
+    },
+    query: {
+      token
     }
   } = req;
 
   try {
-    let datasetId = host;
+    const itemId = host;
+    const agolUrl = new URL(`https://www.arcgis.com/sharing/rest/content/items/${itemId}?f=json`)
 
-    if (isSlug(datasetId)) {
-      datasetId = await getDatasetIdFromSlug(datasetId);
+    if (token) {
+      agolUrl.searchParams.set('token', token);
     }
 
-    const response = await fetch(`https://hub.arcgis.com/datasets/${datasetId}.geojson`);
+    const agolResponse = await fetch(agolUrl.href);
 
-    if (!response.ok) {
-      return callback(new Error(response.statusText))
+    if (!agolResponse.ok) {
+      return callback(new Error(agolResponse.statusText))
     }
 
-    const result = await response.json()
-    callback(null, result);
+    const item = await agolResponse.json()
+    const itemServiceUrl = new URL(`${item.url}/${id}/query?where=1=1&f=geojson&&outSR=4326`)
+
+    if (token) {
+      itemServiceUrl.searchParams.set('token', token);
+    }
+
+    const serviceResponse = await fetch(itemServiceUrl.href);
+
+    if (!serviceResponse.ok) {
+      return callback(new Error(serviceResponse.statusText))
+    }
+
+    const data = await serviceResponse.json()
+
+    // a temporary fix for the invalid output from agol
+    data.features.forEach((feature) => {
+      if (!feature.properties) {
+        feature.properties = {};
+      }
+    })
+
+    callback(null, data);
   } catch (error) {
     callback(error)
   }
-}
-
-function isSlug (id) {
-  return !itemRegex.test(id) && !datasetRegex.test(id);
-}
-
-async function getDatasetIdFromSlug (slug) {
-  const response = await fetch(`https://opendata.arcgis.com/api/v3/datasets?filter[slug]=${slug}&fields[datasets]=id`);
-
-  if (!response.ok) {
-    throw new Error(response.statusText)
-  }
-
-  const result = await response.json()
-
-  if (result.data.length === 0) {
-    throw new Error('Slug not found')
-  }
-
-  return result.data[0].id
 }
 
 module.exports = Model

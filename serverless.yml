@@ -8,34 +8,43 @@ provider:
   runtime: nodejs10.x
 
 functions:
+  get-hub-wfs:
+    handler: src/index.handler
+    events:
+      - http:
+          path: /agol/{host}/{id}
+          method: get
+          cors: true
   get-hub-collections:
     handler: src/index.handler
     events:
       - http:
-          path: /arcgis-hub/{host}/collections
+          path: /agol/{host}/{id}/collections
           method: get
           cors: true
           request:
             parameters:
               paths:
                 host: true
+                id: true
   get-hub-collection:
     handler: src/index.handler
     events:
       - http:
-          path: /arcgis-hub/{host}/collections/{collectionId}
+          path: /agol/{host}/{id}/collections/{collectionId}
           method: get
           cors: true
           request:
             parameters:
               paths:
                 host: true
+                id: true
                 collectionId: true
   get-hub-collection-items:
     handler: src/index.handler
     events:
       - http:
-          path: /arcgis-hub/{host}/collections/{collectionId}/items
+          path: /agol/{host}/{id}/collections/{collectionId}/items
           method: get
           cors: true
           request:
@@ -44,12 +53,13 @@ functions:
                 idField: false
               paths:
                 host: true
+                id: true
                 collectionId: true
   get-hub-collection-item:
     handler: src/index.handler
     events:
       - http:
-          path: /arcgis-hub/{host}/collections/{collectionId}/items/{featureId}
+          path: /agol/{host}/{id}/collections/{collectionId}/items/{featureId}
           method: get
           cors: true
           request:
@@ -58,6 +68,7 @@ functions:
                 idField: false
               paths:
                 host: true
+                id: true
                 collectionId: true
                 featureId: true
   get-ogcapi-features-server:

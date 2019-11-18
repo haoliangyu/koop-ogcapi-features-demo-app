@@ -5,8 +5,8 @@
   },
   "provider-ogcapi-features": {
     "hosts": {
-      "geomet": {
-        "url": "https://geo.weather.gc.ca/geomet-beta/features"
+      "daraa": {
+        "url": "https://services.interactive-instruments.de/t15/daraa"
       }
     }
   }
